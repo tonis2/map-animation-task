@@ -1,0 +1,38 @@
+body {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin:0;
+    padding:0;
+    min-height:100vh;
+}
+
+#map-object, #map-details {
+    display:flex;
+    position: absolute;
+    left:0;
+    right:0;
+    top:10%;
+    margin:0 auto;
+    width:80%;
+}
+
+.Pin {
+    position:absolute;
+}
+
+.pin-title {
+    background:#2c3e50;
+    color:white;
+    padding:5px 15px;
+    border-radius:5px;
+    cursor:pointer;
+    animation: title-income 8s infinite;
+}
+
+@-webkit-keyframes title-income {
+    0%   { opacity: 0; }
+    20%   { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
