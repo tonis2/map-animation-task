@@ -1,0 +1,30 @@
+{
+    "name": "map-animation",
+    "version": "1.0.0",
+    "description": "",
+    "main": "build/bundle.js",
+    "scripts": {
+      "dev": "NODE_ENV=development rollup --watch -c ./rollup.config.js",
+      "build": "NODE_ENV=production rollup -c ./rollup.config.js",
+      "server": "http-server ./",
+      "start": "npm run dev | npm run server"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/tonis2/map-animation-task.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/tonis2/map-animation-task/issues"
+    },
+    "homepage": "https://github.com/tonis2/map-animation-task#readme",
+    "devDependencies": {
+      "babel-core": "^6.26.0",
+      "babel-preset-env": "^1.6.1",
+      "http-server": "latest",
+      "rollup": "latest",
+      "rollup-plugin-babel": "^3.0.4",
+      "rollup-plugin-uglify": "^6.0.0"
+    }
+  }

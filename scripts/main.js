@@ -1,98 +1,57 @@
+import { locations } from "./locations.js"
+
 String.prototype.html = function () {
     let parser = new DOMParser()
     let doc = parser.parseFromString(this, "text/html")
     return doc.body.firstChild
 }
 
-const locations = [
-    {
-        "name": "Philadelphia",
-        "map-key": 5859,
-        "details": true
-    },
-    {
-        "name": "Berlin",
-        "map-key": 1079,
-        "details": true
-    },
-    {
-        "name": "Cape Town",
-        "map-key": 4403,
-        "details": true
-    },
-    {
-        "name": "Italy",
-        "map-key": 1117,
-        "details": true
-    },
-    {
-        "name": "Sydney",
-        "map-key": 3775,
-        "details": true
-    },
-    {
-        "name": "New York",
-        "map-key": 5535,
-        "details": true
-    },
-    {
-        "name": "Estonia",
-        "map-key": 1393,
-        "details": true
-    },
-    {
-        "name": "Tokyo",
-        "map-key": 3349,
-        "details": true
-    },
-    {
-        "name": "Moscow",
-        "map-key": 1325,
-        "details": true
-    },
-    {
-        "name": "Sau Paulo",
-        "map-key": 4731,
-        "details": true
-    },
-    {
-        "name": "Delhi",
-        "map-key": 2255,
-        "details": true
-    },
-    {
-        "name": "Singapor",
-        "map-key": 4011,
-        "details": false
-    }
-]
 
 const createPin = (x, y) => {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    svg.setAttribute("class", "Pin");
-    svg.setAttribute("href", "assets/pin.svg#Pin")
-    svg.style.position = "absolute";
-    svg.style.transform = `translate(${x}px, ${y - 20}px)`
-    return svg
-}
+  return `<img style="transform:translate(${x}px, ${y - 20}px);" class="Pin" src="assets/pin.svg"></img>`.html()
+};
 
 const create_title = (params) => {
-    return `<section style="position:absolute;transform:translate(${params.x + 20}px, ${params.y - 30}px)" class="pin-title" title="${params.name}">
+    return `<section style="transform:translate(${params.x + 20}px, ${params.y - 30}px)" class="pin-title" title="${params.name}">
                 <span>${params.name}</span>
             </section>`.html()
 }
 
-window.onload = () => {
-    const svg_map = document.querySelector("#map-object").contentDocument.children[0]
-    const map_details = document.querySelector("#map-details")
 
-    locations.forEach(loc => {
-        const pin_location = svg_map.querySelector(`#Fill-${loc["map-key"]}`).getBoundingClientRect();
-        loc.x = pin_location.x
-        loc.y = pin_location.y
-        const pin = createPin(pin_location.x, pin_location.y)
-        const title = create_title(loc)
-        svg_map.appendChild(pin)
-        map_details.appendChild(title)
-    })
+const create_details = (params) => {
+    let visitors = params["Visitors"]
+    let wait_time = params["Wait time"]
+    let service_time = params["Service time"]
+    return `<section style="transform:translate(${params.x + 20}px, ${params.y + 10}px)" class="pin-detail">
+                <span class="detail-header">Performance</span>
+                <div class="detail-item"><span>Visitors last week</span><span>${visitors[0]}</span><span style="color:${visitors[1] > 0 ? "green": "red"};">(${visitors[1]}%)</span></div>
+                <div class="detail-item"><span>Wait time</span><span>${wait_time[0]}min</span><span style="color:${wait_time[1] > 0 ? "green": "red"};">(${wait_time[1]}%)</span></div>
+                <div class="detail-item"><span>Service time</span><span>${service_time[0]}min</span><span style="color:${service_time[1] > 0 ? "green": "red"};">(${service_time[1]}%)</span></div>
+            </section>`.html()
 }
+
+window.onload = () => {
+  const svg_map = document.querySelector("#map-object").contentDocument
+    .children[0];
+  const map_details = document.querySelector("#map-details");
+
+  locations.forEach(loc => {
+    const pin_location = svg_map
+      .querySelector(`#Fill-${loc["map-key"]}`)
+      .getBoundingClientRect();
+    loc.x = pin_location.x;
+    loc.y = pin_location.y;
+    const pin = createPin(pin_location.x, pin_location.y);
+
+    map_details.appendChild(pin);
+
+    if (loc.title) {
+      const title = create_title(loc);
+      map_details.appendChild(title);
+    }
+    if (loc.details) {
+      const details = create_details(loc);
+      map_details.appendChild(details);
+    }
+  });
+};

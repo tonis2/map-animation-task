@@ -1,38 +1,125 @@
 body {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    margin:0;
-    padding:0;
-    min-height:100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
-#map-object, #map-details {
-    display:flex;
-    position: absolute;
-    left:0;
-    right:0;
-    top:10%;
-    margin:0 auto;
-    width:80%;
+#map-object,
+#map-details {
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10%;
+  margin: 0 auto;
+  width: 80%;
 }
 
 .Pin {
-    position:absolute;
+  position: absolute;
 }
 
 .pin-title {
-    background:#2c3e50;
-    color:white;
-    padding:5px 15px;
-    border-radius:5px;
-    cursor:pointer;
-    animation: title-income 8s infinite;
+  background: #2c3e50;
+  color: white;
+  position:absolute;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  opacity: 0;
+  animation: title-income 12s infinite;
+  font-family: Skolar;
+  z-index: 5;
 }
 
-@-webkit-keyframes title-income {
-    0%   { opacity: 0; }
-    20%   { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
+.pin-title:before {
+  content:"◄";
+  font-size:16px;
+  color:#2c3e50;
+  width:10px;
+  height:10px;
+  position:absolute;
+  left:-8px;
+  top:10px;
+}
+
+.pin-detail {
+  position:absolute;
+  display: grid;
+  background: white;
+  color: grey;
+  grid-template-columns: 1fr;
+  border-radius: 2px;
+  grid-row-gap: 5px;
+  box-shadow: #2b2c2c36 1px 1px 3px 1px;
+  padding: 10px;
+  opacity: 0;
+  animation: details-income 12s infinite;
+  font-family: Skolar;
+  z-index: 5;
+}
+
+.pin-detail .detail-header {
+  text-align: center;
+  font-size: 11px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.pin-detail .detail-item {
+  display: grid;
+  grid-template-columns: 90px 0.3fr 0.3fr;
+  grid-auto-rows: max-content;
+  font-size: 11px;
+  grid-column-gap: 3px;
+}
+
+.pin-detail .detail-item span:nth-of-type(2) {
+  font-weight: bold;
+  color: black;
+}
+
+@keyframes title-income {
+  0% {
+    opacity: 0;
   }
+  20% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes details-income {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@font-face {
+  font-family: "Skolar";
+  src: url("../assets/fonts/Skolar.woff2") format("woff2"),
+    url("../assets/fonts/Skolar.woff") format("woff");
+}
